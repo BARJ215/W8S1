@@ -12,6 +12,7 @@ $(document).on('pageinit', function() {
         //timeout: 6000,
         //enableHighAccuracy: true
     };
+    //hi
     
     navigator.geolocation.watchPosition(successPosition,failPosition,locationOptions);
 	
