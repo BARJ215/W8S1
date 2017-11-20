@@ -1,85 +1,48 @@
-
-<!-- For more info on jQuery Mobile,  touch gestures and other useful events see : http://api.jquerymobile.com/category/events/ -->
-
-
-var q;
-var r;
-var a = [
-    "It is certain",
-    "It is decidedly so",
-    "Without a doubt",
-    "Yes definitely",
-    "You may rely on it",
-    "As I see it, yes",
-    "Most likely",
-    "Outlook good",
-    "Yes",
-    "Signs point to yes",
-    "Reply hazy try again",
-    "Ask again later",
-    "Better not tell you now",
-    "Cannot predict now",
-    "Concentrate and ask again",
-    "Don't count on it",
-    "My reply is no",
-    "My sources say no",
-    "Outlook not so good",
-    "Very doubtful"  
-];
-var a_outlook =[
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-];
+//when the jQuery Mobile page is initialised
+$(document).on('pageinit', function() {
+	
+	//set up listener for button click
+	$(document).on('click', getPosition);
+	
+	//change time box to show message
+	$('#time').val("Press the button to get location data");
+	
+});
 
 
-$(document).on("pagecreate","#pageone",function(){
-  $('#submitButton').on("click", function(){
-      magic8ball();
-  });            
-});  
-
-document.addEventListener("deviceready", onDeviceReady, false);
-
-function onDeviceReady() {
-    shake.startWatch(magic8ball(),40);
+//Call this function when you want to get the current position
+function getPosition() {
+	
+	//change time box to show updated message
+	$('#time').val("Getting data...");
+	
+	//instruct location service to get position with appropriate callbacks
+	navigator.geolocation.getCurrentPosition(successPosition, failPosition);
 }
 
 
-function magic8ball(){
-    var q = $('#questionText').val();
-    r= random();
-    navigator.notification.alert(a[r]);
-    if(a_outlook[r]>0){
-        //good
-        navigator.notification.beep(1);
-    }else if(a_outlook[r]<0){
-        //bad
-        navigator.vibrate(200);
-    }else{
-        //neutral
-        navigator.notification.beep(1);
-        navigator.vibrate(200);
-    } 
+//called when the position is successfully determined
+function successPosition(position) {
+	
+	//You can find out more details about what the position obejct contains here:
+	// http://www.w3schools.com/html/html5_geolocation.asp
+	
+
+	//lets get some stuff out of the position object
+	var time = position.timestamp;
+	var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+	
+	//OK. Now we want to update the display with the correct values
+	$('#time').val("Recieved data at " + time);
+	$('#lattext').val(latitude);
+    $('#longtext').val(longitude);
+	
 }
 
-function random(){
-	return Math.floor(Math.random()*20);
+//called if the position is not obtained correctly
+function failPosition(error) {
+	//change time box to show updated message
+	$('#time').val("Error getting data: " + error);
+	
 }
