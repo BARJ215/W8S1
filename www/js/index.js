@@ -8,9 +8,9 @@ $(document).on('pageinit', function() {
 	$('#time').val("Press the button to get location data");
     
     var locationOptions = {
-        maximumAge: 10000,
-        timeout: 6000,
-        enableHighAccuracy: true
+        //maximumAge: 10000,
+        //timeout: 6000,
+        //enableHighAccuracy: true
     };
     
     navigator.geolocation.watchPosition(successPosition,failPosition,locationOptions);
