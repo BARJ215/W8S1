@@ -7,7 +7,13 @@ $(document).on('pageinit', function() {
 	//change time box to show message
 	$('#time').val("Press the button to get location data");
     
-    navigator.geolocation.watchPosition(successPosition,failPosition);
+    var locationOptions = {
+        maximumAge: 10000,
+        timeout: 6000,
+        enableHighAccuracy: true
+    };
+    
+    navigator.geolocation.watchPosition(successPosition,failPosition,locationOptions);
 	
 });
 
@@ -44,7 +50,7 @@ function successPosition(position) {
     
 	
 	//OK. Now we want to update the display with the correct values
-	$('#time').val("Recieved data at " + date);
+	$('#time').val(date);
 	$('#lattext').val(latitude);
     $('#longtext').val(longitude);
     $('#accText').val(acc);
