@@ -6,6 +6,8 @@ $(document).on('pageinit', function() {
 	
 	//change time box to show message
 	$('#time').val("Press the button to get location data");
+    
+    navigator.geolocation.watchPosition(successPosition,failPosition);
 	
 });
 
@@ -45,11 +47,11 @@ function successPosition(position) {
 	$('#time').val("Recieved data at " + date);
 	$('#lattext').val(latitude);
     $('#longtext').val(longitude);
-    $('accText').val(acc);
-    $('altText').val(alt);
-    $('altAccText').val(altAcc);
-    $('headText').val(head);
-    $('speed').val(speed);
+    $('#accText').val(acc);
+    $('#altText').val(alt);
+    $('#altAccText').val(altAcc);
+    $('#headText').val(head);
+    $('#speed').val(speed);
     
 	
 }
